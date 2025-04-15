@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring boot Websocket Chat Application</title>
+    <link rel="stylesheet" href="/css/main.css" />
+
+</head>
+<body>
+<noscript>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
+
+<div id="username-page">
+    <div class="username-page-container">
+        <h1 class="title">Enter Chat Room</h1>
+        <form id="usernameForm" name="usernameForm">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <input type="text" id="roomId" placeholder="Room ID (default: public)" autocomplete="off" class="form-control" />
+            </div>
+            <div class="form-group button-group">
+                <button type="submit" class="accent username-submit">Join Room</button>
+                <button type="button" id="createRoomBtn" class="secondary">Create New Room</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="chat-page" class="hidden">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>WebSocket Chat Demo</h2>
+            <div class="room-info">
+                <span id="current-room-name">public</span>
+                <span class="room-users" id="user-count">0 users</span>
+            </div>
+        </div>
+        <div class="connecting">
+            Connecting...
+        </div>
+        <ul id="messageArea"></ul>
+        <form id="messageForm" name="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                    <button type="submit" class="primary">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

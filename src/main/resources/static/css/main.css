@@ -286,48 +286,6 @@ button.accent {
     }
 }
 
-
-
-
-/* Novos estilos para o sistema de salas */
-.button-group {
-    display: flex;
-    gap: 10px;
-}
-
-.button-group button {
-    flex: 1;
-}
-
-.room-info {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #666;
-    display: flex;
-    justify-content: space-between;
-}
-
-.room-users {
-    background-color: #6db33f;
-    color: white;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 12px;
-}
-
-/* Ajustes para o layout responsivo */
-@media screen and (max-width: 480px) {
-    .button-group {
-        flex-direction: column;
-    }
-
-    .room-info {
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-    }
-}
-
 .event-message {
     text-align: center;
     color: #666;
@@ -341,5 +299,25 @@ button.accent {
     padding: 5px;
     border-radius: 5px;
     display: inline-block;
+}
+
+
+.chat-message.my-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: auto;
+    max-width: 95%;
+}
+
+.chat-message.my-message i {
+    left: 600px !important;
+    top:33px;
+}
+
+.chat-message.my-message p {
+    background-color: #6db33f;
+    border-radius: 18px 18px 18px 18px;
+    padding: 8px 10px;
 }
 

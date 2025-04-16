@@ -143,6 +143,7 @@ function onMessageReceived(payload) {
         const message = JSON.parse(payload.body);
         const messageElement = document.createElement('li');
         const messageType = message.messageType;
+        const isCurrentUser = message.sender === username;
 
          if (messageType === 'JOIN' || messageType === 'LEAVE') {
 
@@ -153,15 +154,13 @@ function onMessageReceived(payload) {
 
             messageElement.innerHTML = `
                 <p class="system-message">
-                    <span class="event-icon">${messageType === 'JOIN' ? '→' : '←'}</span>
+                    <span class="event-icon">${messageType === 'JOIN' ? '→ ' : '← '}</span>
                     ${displayText}
-                </p>
-            `;
-            if(messageType ==='LEAVE'){
-                loadMessages(message.roomId)
-                }
+                </p>`;
 
-        } else {
+        }
+
+        else {
             messageElement.classList.add('chat-message');
 
             const avatarElement = document.createElement('i');
@@ -174,7 +173,11 @@ function onMessageReceived(payload) {
             const textElement = document.createElement('p');
             textElement.textContent = message.content;
 
-            messageElement.append(avatarElement, usernameElement, textElement);
+            messageElement.append(avatarElement ,usernameElement, textElement);
+
+            if (isCurrentUser) {
+                messageElement.classList.add('my-message');
+            }
         }
 
         messageArea.appendChild(messageElement);

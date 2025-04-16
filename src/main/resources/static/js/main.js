@@ -97,8 +97,7 @@ function onConnected(roomId) {
         JSON.stringify({
             sender: username,
             messageType: 'JOIN',
-            roomId: roomId,
-            content: `${username} joined the room`
+            roomId: roomId
         })
     );
 
@@ -124,6 +123,7 @@ async function loadMessages(roomId) {
     }
 }
 
+
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
     if(messageContent && stompClient && currentRoomId) {
@@ -138,24 +138,18 @@ function sendMessage(event) {
     }
     event.preventDefault();
 }
-
 function onMessageReceived(payload) {
     try {
         const message = JSON.parse(payload.body);
-
         const messageElement = document.createElement('li');
-
         const messageType = message.messageType;
 
-        console.log("Tipo de mensagem detectado:", messageType);
-
-
-
          if (messageType === 'JOIN' || messageType === 'LEAVE') {
-                    messageElement.classList.add('event-message');
-                    const action = messageType === 'JOIN' ? 'entrou' : 'saiu';
 
-                    const displayText = message.content || `${message.sender} ${action}!`;
+            messageElement.classList.add('event-message');
+            const action = messageType === 'JOIN' ? ' joined the room' : ' left the room';
+
+            const displayText = message.sender + action;
 
             messageElement.innerHTML = `
                 <p class="system-message">
@@ -163,6 +157,9 @@ function onMessageReceived(payload) {
                     ${displayText}
                 </p>
             `;
+            if(messageType ==='LEAVE'){
+                loadMessages(message.roomId)
+                }
 
         } else {
             messageElement.classList.add('chat-message');
@@ -187,7 +184,6 @@ function onMessageReceived(payload) {
         console.error("Erro ao processar mensagem:", error, payload);
     }
 }
-
 
 function getAvatarColor(messageSender) {
     var hash = 0;

@@ -27,7 +27,7 @@ public class ChatController {
 
         Room room = roomRepository.findByRoomId(roomId);
 
-        if(room == null) {
+        if (room == null) {
             throw new RuntimeException("room not found!");
         }
 
@@ -46,14 +46,14 @@ public class ChatController {
         headerAccessor.getSessionAttributes().put("roomId", message.roomId());
 
 
-        if(!roomId.equals(message.roomId())) {
+        if (!roomId.equals(message.roomId())) {
             throw new IllegalArgumentException("Room ID mismatch");
         }
 
         ChatMessage chatMessage = new ChatMessage(message.content(), message.sender(), MessageType.JOIN);
         Room room = roomRepository.findByRoomId(message.roomId());
 
-        if(room == null)
+        if (room == null)
             throw new RuntimeException("room not found!");
 
         room.getMessages().add(chatMessage);

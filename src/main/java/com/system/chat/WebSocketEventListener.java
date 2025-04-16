@@ -6,7 +6,6 @@ import com.system.chat.model.Room;
 import com.system.chat.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -18,7 +17,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @Slf4j
 public class WebSocketEventListener {
 
-    private final SimpMessageSendingOperations messageTemplate;
+    private final SimpMessageSendingOperations messagingTemplate;
     private final RoomRepository roomRepository;
 
     @EventListener
@@ -32,11 +31,11 @@ public class WebSocketEventListener {
         if (username != null && roomId != null) {
             log.info("User disconnected : {} from room: {}", username, roomId);
             var chatMessage = ChatMessage.builder()
-                    .messageType(MessageType.LEAVER)
+                    .messageType(MessageType.LEAVE)
                     .sender(username)
                     .build();
 
-            messageTemplate.convertAndSend("/topic/" + roomId, chatMessage);
+            messagingTemplate.convertAndSend("/topic/" + roomId, chatMessage);
 
             Room room = roomRepository.findByRoomId(roomId);
             if (room != null) {

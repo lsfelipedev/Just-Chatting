@@ -328,22 +328,12 @@ button.accent {
     }
 }
 
-/* Estilo para mensagens de sala */
-.room-message {
-    font-style: italic;
-    color: #6db33f;
-    text-align: center;
-    padding: 5px;
-    background-color: #f8f8f8;
-    border-radius: 4px;
-    margin: 5px 0;
-}
-
 .event-message {
     text-align: center;
     color: #666;
     font-style: italic;
     margin: 10px 0;
+    font-size: 0.9em;
 }
 
 .system-message {

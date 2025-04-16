@@ -46,7 +46,6 @@ public class ChatController {
         headerAccessor.getSessionAttributes().put("roomId", message.roomId());
 
 
-        // Valida se o roomId do path bate com o do payload
         if(!roomId.equals(message.roomId())) {
             throw new IllegalArgumentException("Room ID mismatch");
         }
@@ -59,9 +58,6 @@ public class ChatController {
 
         room.getMessages().add(chatMessage);
         roomRepository.save(room);
-
-        // Adicione temporariamente no seu método addUser:
-        System.out.println("Enviando mensagem JOIN: " + chatMessage);
 
         return chatMessage;
     }

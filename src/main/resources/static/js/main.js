@@ -7,11 +7,11 @@ var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
-var roomIdInput = document.querySelector('#roomId'); // Adicione um input para o roomId no HTML
+var roomIdInput = document.querySelector('#roomId');
 
 var stompClient = null;
 var username = null;
-var currentRoomId = null; // Variável para armazenar a sala atual
+var currentRoomId = null;
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -52,7 +52,6 @@ async function setupRoom(shouldCreateNewRoom) {
         const socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
-        // Conexão com tratamento de erro adequado
         stompClient.connect({},
             () => onConnected(currentRoomId),
             (error) => onError(error)
@@ -69,21 +68,16 @@ async function setupRoom(shouldCreateNewRoom) {
     }
 }
 
-// Função de tratamento de erro do WebSocket
 function onError(error) {
     console.error('WebSocket Connection Error:', error);
     connectingElement.textContent = 'Connection error. Please refresh and try again.';
     connectingElement.style.color = 'red';
 
-    // Restaura a UI
     usernamePage.classList.remove('hidden');
     chatPage.classList.add('hidden');
 
-    // Opcional: tentar reconectar após um delay
-    // setTimeout(() => setupRoom(false), 5000);
 }
 
-// Funções de entrada específicas
 async function connect(event) {
     if (event) event.preventDefault();
     await setupRoom(false);
@@ -96,21 +90,18 @@ async function createRoom(event) {
 
 
 function onConnected(roomId) {
-    // Subscribe to the specific Room Topic
     stompClient.subscribe(`/topic/${roomId}`, onMessageReceived);
 
-    // Tell your username to the server with room info
-    stompClient.send("/app/chat.addUser",
+    stompClient.send(`/app/chat.addUser/${roomId}`,
         {},
         JSON.stringify({
             sender: username,
-            type: 'JOIN',
+            messageType: 'JOIN',
             roomId: roomId,
             content: `${username} joined the room`
         })
     );
 
-    // Load previous messages
     loadMessages(roomId);
 
     connectingElement.classList.add('hidden');
@@ -122,7 +113,7 @@ async function loadMessages(roomId) {
         if (response.ok) {
             const messages = await response.json();
             messages.forEach(message => {
-                // Cria um payload simulado para usar a mesma função
+
                 onMessageReceived({
                     body: JSON.stringify(message)
                 });
@@ -150,19 +141,21 @@ function sendMessage(event) {
 
 function onMessageReceived(payload) {
     try {
-        console.log("Raw payload:", payload);
         const message = JSON.parse(payload.body);
-        console.log("Parsed message:", message);
 
         const messageElement = document.createElement('li');
 
-        // Verifica tanto 'type' quanto 'messageType' para maior compatibilidade
-        const messageType = message.type || message.messageType;
+        const messageType = message.messageType;
 
-        if (messageType === 'JOIN' || messageType === 'LEAVE') {
-            messageElement.classList.add('event-message');
-            const action = messageType === 'JOIN' ? 'entrou' : 'saiu';
-            const displayText = message.content || `${message.sender} ${action}!`;
+        console.log("Tipo de mensagem detectado:", messageType);
+
+
+
+         if (messageType === 'JOIN' || messageType === 'LEAVE') {
+                    messageElement.classList.add('event-message');
+                    const action = messageType === 'JOIN' ? 'entrou' : 'saiu';
+
+                    const displayText = message.content || `${message.sender} ${action}!`;
 
             messageElement.innerHTML = `
                 <p class="system-message">
@@ -170,8 +163,8 @@ function onMessageReceived(payload) {
                     ${displayText}
                 </p>
             `;
+
         } else {
-            // Mensagem normal de chat
             messageElement.classList.add('chat-message');
 
             const avatarElement = document.createElement('i');
@@ -191,7 +184,7 @@ function onMessageReceived(payload) {
         messageArea.scrollTop = messageArea.scrollHeight;
 
     } catch (error) {
-        console.error("Error processing message:", error, payload);
+        console.error("Erro ao processar mensagem:", error, payload);
     }
 }
 
@@ -206,5 +199,5 @@ function getAvatarColor(messageSender) {
 }
 
 document.getElementById('createRoomBtn').addEventListener('click', createRoom);
-usernameForm.addEventListener('submit', connect); // Observe que removi o 'true'
+usernameForm.addEventListener('submit', connect);
 messageForm.addEventListener('submit', sendMessage, true)

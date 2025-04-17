@@ -204,8 +204,8 @@ button.accent {
 }
 
 #chat-page .chat-message p {
-    color: #43464b;
-    font-family: 'Roboto', sans-serif;
+    color: #3c4047;
+    font-family: Roboto ;
     font-weight: 400; /* ou outro peso, caso necessário */
 }
 
@@ -321,7 +321,7 @@ button.accent {
     box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.1);
     border: 1px solid #e0e0e0;
     background-color: #6db33f;
-    border-radius: 18px;
+    border-radius: 15px 7px 15px 15px;
     padding: 6px 10px;
 }
 
@@ -329,7 +329,7 @@ button.accent {
     box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.1);
     border: 1px solid #e0e0e0;
     background-color: #e0e0e0;
-    border-radius: 18px;
+    border-radius: 7px 15px 15px 15px;
     padding: 6px 10px;
     display: table;
     max-width: 80%;

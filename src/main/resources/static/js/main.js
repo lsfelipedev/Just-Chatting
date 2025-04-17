@@ -10,6 +10,7 @@ var connectingElement = document.querySelector('.connecting');
 var roomIdInput = document.querySelector('#roomId');
 var roomName = document.querySelector('#current-room-name');
 var userCountRoom = document.querySelector('#user-count');
+var closeChatButton = document.querySelector('#btn-back');
 
 var stompClient = null;
 var username = null;
@@ -23,9 +24,8 @@ var colors = [
 ];
 
 
+
 async function setupRoom(shouldCreateNewRoom) {
-
-
 
     username = document.querySelector('#name').value.trim();
     currentRoomId = roomIdInput.value.trim() || 'public';
@@ -213,6 +213,10 @@ function getAvatarColor(messageSender) {
     var index = Math.abs(hash % colors.length);
     return colors[index];
 }
+
+closeChatButton.addEventListener('click', function () {
+    window.location.href ='index.html';
+});
 
 document.getElementById('createRoomBtn').addEventListener('click', createRoom);
 usernameForm.addEventListener('submit', connect);

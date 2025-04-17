@@ -205,6 +205,8 @@ button.accent {
 
 #chat-page .chat-message p {
     color: #43464b;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400; /* ou outro peso, caso necessário */
 }
 
 #messageForm .input-group input {
@@ -316,8 +318,25 @@ button.accent {
 }
 
 .chat-message.my-message p {
+    box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
     background-color: #6db33f;
-    border-radius: 18px 18px 18px 18px;
-    padding: 8px 10px;
+    border-radius: 18px;
+    padding: 6px 10px;
+}
+
+.chat-message:not(.my-message) p {
+    box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    background-color: #e0e0e0;
+    border-radius: 18px;
+    padding: 6px 10px;
+    display: table;
+    max-width: 80%;
+}
+
+.chat-message:not(.my-message) i {
+    position: absolute;
+    bottom: 12px;
 }
 

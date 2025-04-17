@@ -69,7 +69,7 @@ button {
     white-space: nowrap;
     vertical-align: middle;
     padding: 0.6rem 1rem;
-    border-radius: 2px;
+    border-radius: 5px;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     min-height: 38px;
@@ -205,8 +205,8 @@ button.accent {
 
 #chat-page .chat-message p {
     color: #3c4047;
-    font-family: Roboto ;
-    font-weight: 400; /* ou outro peso, caso necessário */
+    font-family: Roboto;
+    font-weight: 400;
 }
 
 #messageForm .input-group input {
@@ -344,4 +344,19 @@ button.accent {
     display:flex;
     gap:25px;
     justify-content: center;
+}
+
+.logo{
+    margin-top: 5px;
+    margin-left: 10px;
+    width: 40x;
+    height: 40px;
+}
+
+header{
+    display: flex;
+    align-items:end;
+    gap: 7px;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
 }

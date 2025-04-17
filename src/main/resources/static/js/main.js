@@ -153,23 +153,21 @@ function onMessageReceived(payload) {
         const messageType = message.messageType;
         const isCurrentUser = message.sender === username;
 
-
          if (messageType === 'JOIN' || messageType === 'LEAVE') {
 
+            var displayText = null;
+
              if (messageType === 'JOIN') {
-                     roomUsers.add(message.sender);
+                roomUsers.add(message.sender);
+                displayText = `${message.sender} joined the room`;
              }
              else{
-                roomUsers.delete(message.sender);
+                 displayText = `${message.sender} left the room`;
+                 roomUsers.delete(message.sender);
              }
 
              messageElement.classList.add('event-message');
-
-             const action = messageType === 'JOIN' ? ' joined the room' : ' left the room';
-
              userCountRoom.textContent = `${roomUsers.size} user(s) online`;
-
-             const displayText = message.sender + action;
 
              messageElement.innerHTML = `
                 <p class="system-message">

@@ -8,10 +8,14 @@ var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 var roomIdInput = document.querySelector('#roomId');
+var roomName = document.querySelector('#current-room-name');
+var userCountRoom = document.querySelector('#user-count');
 
 var stompClient = null;
 var username = null;
 var currentRoomId = null;
+const roomUsers = new Set();
+
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -20,8 +24,12 @@ var colors = [
 
 
 async function setupRoom(shouldCreateNewRoom) {
+
+
+
     username = document.querySelector('#name').value.trim();
     currentRoomId = roomIdInput.value.trim() || 'public';
+    roomName.textContent = `Room ID: ${currentRoomId}`;
 
     if (!username) {
         alert('Please enter a username');
@@ -145,14 +153,25 @@ function onMessageReceived(payload) {
         const messageType = message.messageType;
         const isCurrentUser = message.sender === username;
 
+
          if (messageType === 'JOIN' || messageType === 'LEAVE') {
 
-            messageElement.classList.add('event-message');
-            const action = messageType === 'JOIN' ? ' joined the room' : ' left the room';
+             if (messageType === 'JOIN') {
+                     roomUsers.add(message.sender);
+             }
+             else{
+                roomUsers.delete(message.sender);
+             }
 
-            const displayText = message.sender + action;
+             messageElement.classList.add('event-message');
 
-            messageElement.innerHTML = `
+             const action = messageType === 'JOIN' ? ' joined the room' : ' left the room';
+
+             userCountRoom.textContent = `${roomUsers.size} user(s) online`;
+
+             const displayText = message.sender + action;
+
+             messageElement.innerHTML = `
                 <p class="system-message">
                     <span class="event-icon">${messageType === 'JOIN' ? '→ ' : '← '}</span>
                     ${displayText}

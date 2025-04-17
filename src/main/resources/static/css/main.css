@@ -340,3 +340,8 @@ button.accent {
     bottom: 12px;
 }
 
+.room-info{
+    display:flex;
+    gap:25px;
+    justify-content: center;
+}

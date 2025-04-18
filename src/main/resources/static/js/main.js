@@ -18,6 +18,17 @@ var currentRoomId = null;
 const roomUsers = new Set();
 
 
+const toggle = document.getElementById('toggle-btn');
+
+toggle.addEventListener('change', function () {
+  if (this.checked) {
+    console.log('🔛 Ligado');
+  } else {
+    console.log('🔴 Desligado');
+  }
+});
+
+
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
@@ -35,12 +46,17 @@ async function setupRoom(shouldCreateNewRoom) {
         return false;
     }
 
+    const roomIdAndVisibility = {
+        roomId: currentRoomId,
+        isVisible: false
+    };
+
     try {
         if (shouldCreateNewRoom) {
             const createResponse = await fetch('/rooms', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: currentRoomId
+                body: JSON.stringify(roomIdAndVisibility)
             });
 
             if (!createResponse.ok) {
@@ -56,7 +72,7 @@ async function setupRoom(shouldCreateNewRoom) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
-        const socket = new SockJS('/ws');8
+        const socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({},
@@ -149,6 +165,7 @@ function sendMessage(event) {
     }
     event.preventDefault();
 }
+
 function onMessageReceived(payload) {
     try {
         const message = JSON.parse(payload.body);

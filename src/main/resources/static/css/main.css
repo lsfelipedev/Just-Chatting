@@ -96,7 +96,7 @@ button.accent {
 
 #username-page {
     display:flex;
-    justify-content: center;   /* Centraliza horizontalmente */
+    justify-content: center;
     align-items: center;
     text-align: center;
     height: 100vh;
@@ -133,7 +133,7 @@ button.accent {
 }
 
 .button-group{
-    margin-top:34px;
+    margin-top:10px;
     display:flex;
     justify-content: center;
     gap:25px;
@@ -239,7 +239,7 @@ button.accent {
 }
 
 .chat-header {
-    position: relative; /* necessário para o botão ficar relativo a esse container */
+    position: relative;
     text-align: center;
     padding: 15px;
     border-bottom: 1px solid #ececec;
@@ -393,7 +393,55 @@ header{
     font-family: 'Montserrat', sans-serif;
 }
 
-.background-image{
-    width:100%;
-    height: 100%;
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: red;
+  transition: 0.4s;
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider::before {
+  transform: translateX(30px);
+  }
+
+.check-visibly {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }

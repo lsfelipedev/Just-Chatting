@@ -2,6 +2,7 @@ package com.system.chat.controller;
 
 import com.system.chat.model.ChatMessage;
 import com.system.chat.model.Room;
+import com.system.chat.model.RoomDtoRequest;
 import com.system.chat.service.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,13 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-
     @PostMapping
-    public ResponseEntity createRoom(@RequestBody String roomId){
+    public ResponseEntity createRoom(@RequestBody RoomDtoRequest roomDtoRequest){
 
-        if(roomService.getRoomById(roomId) != null)
+        if(roomService.getRoomById(roomDtoRequest.roomId()) != null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Room already exists.");
 
-        Room room = roomService.createRoom( new Room(roomId));
+        Room room = roomService.createRoom( new Room(roomDtoRequest));
         return ResponseEntity.status(HttpStatus.CREATED).body(room);
     }
 

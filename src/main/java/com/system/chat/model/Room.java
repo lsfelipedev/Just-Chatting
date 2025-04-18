@@ -27,4 +27,9 @@ public class Room {
     public Room(String roomId) {
         this.roomId = roomId;
     }
+
+    public Room(RoomDtoRequest roomDtoRequest){
+        this.roomId = roomDtoRequest.roomId();
+        this.isVisible = roomDtoRequest.isVisible();
+    }
 }

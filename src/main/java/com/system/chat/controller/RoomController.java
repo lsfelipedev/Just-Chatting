@@ -2,8 +2,7 @@ package com.system.chat.controller;
 
 import com.system.chat.model.ChatMessage;
 import com.system.chat.model.Room;
-import com.system.chat.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.system.chat.service.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +14,20 @@ import java.util.Map;
 @RequestMapping("/rooms")
 public class RoomController {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomService roomService;
+
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
 
     @PostMapping
-    public ResponseEntity createRoom(@RequestBody Map<String, String> roomMap){
+    public ResponseEntity createRoom(@RequestBody String roomId){
 
-        String roomString = roomMap.get("roomId");
-
-        if(roomRepository.findByRoomId(roomString) != null)
+        if(roomService.getRoomById(roomId) != null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Room already exists.");
 
-        Room room = roomRepository.save(new Room(roomString));
+        Room room = roomService.createRoom( new Room(roomId));
         return ResponseEntity.status(HttpStatus.CREATED).body(room);
     }
 
@@ -35,7 +35,7 @@ public class RoomController {
     public ResponseEntity joinRoom( @PathVariable Map<String, String> roomId){
         String room = roomId.get("roomId");
 
-        if(roomRepository.findByRoomId(room) == null)
+        if(roomService.getRoomById(room) == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Room not found!!");
 
         return ResponseEntity.ok(room);
@@ -47,7 +47,7 @@ public class RoomController {
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
             @RequestParam(value = "size", defaultValue = "20", required = false) int size) {
 
-        Room room = roomRepository.findByRoomId(roomId);
+        Room room = roomService.getRoomById(roomId);
         if (room == null)
             return ResponseEntity.badRequest().build();
 

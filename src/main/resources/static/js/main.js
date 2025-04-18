@@ -40,7 +40,7 @@ async function setupRoom(shouldCreateNewRoom) {
             const createResponse = await fetch('/rooms', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ roomId: currentRoomId })
+                body: currentRoomId
             });
 
             if (!createResponse.ok) {

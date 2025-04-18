@@ -4,7 +4,7 @@ import com.system.chat.message.MessageDto;
 import com.system.chat.message.MessageType;
 import com.system.chat.model.ChatMessage;
 import com.system.chat.model.Room;
-import com.system.chat.repository.RoomRepository;
+import com.system.chat.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 public class ChatController {
 
     @Autowired
-    private RoomRepository roomRepository;
+    private RoomService roomService;
 
     @MessageMapping("/chat.sendMessage/{roomId}")
     @SendTo("/topic/{roomId}")
@@ -25,14 +25,14 @@ public class ChatController {
             @DestinationVariable String roomId,
             @Payload ChatMessage chatMessage) {
 
-        Room room = roomRepository.findByRoomId(roomId);
+        Room room = roomService.getRoomById(roomId);
 
         if (room == null) {
             throw new RuntimeException("room not found!");
         }
 
         room.getMessages().add(chatMessage);
-        roomRepository.save(room);
+        roomService.createRoom(room);
 
         return chatMessage;
     }
@@ -51,13 +51,13 @@ public class ChatController {
         }
 
         ChatMessage chatMessage = new ChatMessage(message.content(), message.sender(), MessageType.JOIN);
-        Room room = roomRepository.findByRoomId(message.roomId());
+        Room room = roomService.getRoomById(message.roomId());
 
         if (room == null)
             throw new RuntimeException("room not found!");
 
         room.getMessages().add(chatMessage);
-        roomRepository.save(room);
+        roomService.createRoom(room);
 
         return chatMessage;
     }

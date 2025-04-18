@@ -21,6 +21,7 @@ public class Room {
     private String id;
     private String roomId;
     private List<ChatMessage> messages = new ArrayList<>();
+    private boolean isVisible = true;
 
 
     public Room(String roomId) {

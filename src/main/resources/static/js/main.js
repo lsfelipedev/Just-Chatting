@@ -24,7 +24,6 @@ var colors = [
 ];
 
 
-
 async function setupRoom(shouldCreateNewRoom) {
 
     username = document.querySelector('#name').value.trim();
@@ -57,14 +56,14 @@ async function setupRoom(shouldCreateNewRoom) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
-        const socket = new SockJS('/ws');
+        const socket = new SockJS('/ws');8
         stompClient = Stomp.over(socket);
 
         stompClient.connect({},
             () => onConnected(currentRoomId),
             (error) => onError(error)
         );
-
+        joinRoom();
         return true;
 
     } catch (error) {
@@ -96,6 +95,10 @@ async function createRoom(event) {
     await setupRoom(true);
 }
 
+function joinRoom() {
+    document.getElementById("username-page").style.display = "none";
+    document.getElementById("chat-page").style.display = "block";
+}
 
 function onConnected(roomId) {
     stompClient.subscribe(`/topic/${roomId}`, onMessageReceived);
@@ -174,7 +177,6 @@ function onMessageReceived(payload) {
                     <span class="event-icon">${messageType === 'JOIN' ? '→ ' : '← '}</span>
                     ${displayText}
                 </p>`;
-
         }
 
         else {

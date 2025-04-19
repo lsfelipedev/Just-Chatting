@@ -3,123 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <title>Just Chatting</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/main.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"></head>
 <body>
-<noscript>
-    <h2>Sorry! Your browser doesn't support Javascript</h2>
-</noscript>
+    <noscript>
+        <h2>Sorry! Your browser doesn't support Javascript</h2>
+    </noscript>
 
-<header>
-    <img src="image/logo.png" alt="logo" class="logo">
-    Just Chatting</header>
+    <header>
+        <img src="image/logo.png" alt="logo" class="logo">
+        Just Chatting</header>
 
-<div id="username-page">
-    <div class="username-page-container">
-        <h1 class="title">Enter Chat Room</h1>
-        <form id="usernameForm" name="usernameForm">
-            <div class="form-group">
-                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <input type="text" id="roomId" placeholder="Room ID (default: public)" autocomplete="off" class="form-control" />
-            </div>
-            <div class="check-visibly">
-                <p>You Want Visibly Room?</p>
-                <label class="switch">
-                    <input type="checkbox" id="toggle-btn" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="form-group button-group">
-                <button type="submit" class="accent username-submit">Join Room</button>
-                <button type="button" id="createRoomBtn" class="secondary">Create New Room</button>
-            </div>
-        </form>
-    </div>
-    <div class="rooms-created">
-        <h1 class="title-visible-rooms">Visible Rooms</h1>
-        <div class="table-wrapper">
-            <table class="table">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Users</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Otto</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>Thornton</td>
-                    <td>29</td>
-                </tr>
-                <tr>
-                    <td>the Bird</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>Otto</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>Thornton</td>
-                    <td>29</td>
-                </tr>
-                <tr>
-                    <td>the Bird</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>Otto</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>Thornton</td>
-                    <td>29</td>
-                </tr>
-                <tr>
-                    <td>the Bird</td>
-                    <td>4</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-<div id="chat-page" class="hidden">
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>Just Chatting</h2>
-            <div class="room-info">
-                <span id="current-room-name">public</span>
-                <span class="room-users" id="user-count">0 users</span>
-            </div>
-            <button type="submit" id="btn-back">X</button>
-        </div>
-        <div class="connecting">
-            Connecting...
-        </div>
-        <ul id="messageArea"></ul>
-        <form id="messageForm" name="messageForm">
-            <div class="form-group">
-                <div class="input-group clearfix">
-                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                    <button type="submit" class="primary">Send</button>
+    <div id="username-page">
+        <div class="username-page-container">
+            <h1 class="title">Enter Chat Room</h1>
+            <form id="usernameForm" name="usernameForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" required />
                 </div>
+                <div class="form-group">
+                    <input type="text" id="roomId" placeholder="Room ID (default: public)" autocomplete="off" class="form-control" />
+                </div>
+                <div class="check-visibly">
+                    <p>You Want Visibly Room?</p>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-btn" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="form-group button-group">
+                    <button type="submit" class="accent username-submit">Join Room</button>
+                    <button type="button" id="createRoomBtn" class="secondary">Create New Room</button>
+                </div>
+            </form>
+        </div>
+        <div class="rooms-created">
+            <h1 class="title-visible-rooms">Visible Rooms</h1>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Users</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Otto</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Thornton</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>the Bird</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Otto</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Thornton</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>the Bird</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Otto</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Thornton</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>the Bird</td>
+                        <td>4</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="/js/main.js"></script>
 
+    <div id="chat-page" class="hidden">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Just Chatting</h2>
+                <div class="room-info">
+                    <span id="current-room-name">public</span>
+                    <span class="room-users" id="user-count">0 users</span>
+                </div>
+                <button type="submit" id="btn-back">X</button>
+            </div>
+            <div class="connecting">
+                Connecting...
+            </div>
+            <ul id="messageArea"></ul>
+            <form id="messageForm" name="messageForm">
+                <div class="form-group">
+                    <div class="input-group clearfix">
+                        <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                        <button type="submit" class="primary">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

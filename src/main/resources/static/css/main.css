@@ -102,10 +102,11 @@ button.accent {
     text-align: center;
     height: 100vh;
     gap:30px;
-    background: #ecfdff5c;
 }
+
+
 .rooms-created {
-    background: #fff;
+    background-color: #fff;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     border-radius: 2px;
     width: 100%;
@@ -419,7 +420,6 @@ header{
     gap: 7px;
     font-size: 25px;
     font-family: 'Montserrat', sans-serif;
-    background: #ecfdff5c;
 }
 
 .switch {

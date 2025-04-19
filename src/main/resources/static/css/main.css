@@ -54,6 +54,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 1.7em;
+     margin-top: 0px;
 }
 
 a {
@@ -102,15 +103,37 @@ button.accent {
     height: 100vh;
     gap:30px;
 }
-
 .rooms-created {
     background: #fff;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     border-radius: 2px;
     width: 100%;
     max-width: 300px;
-    padding: 20px;
-    height:380px;
+    height:360px;
+}
+
+.title-visible-rooms{
+    margin: 7px 0px;
+}
+
+.table-wrapper {
+    height: 304px;
+    width:300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    overflow-wrap: break-word;
 }
 
 .username-page-container {

@@ -16,21 +16,7 @@ const toggle = document.getElementById('toggle-btn');
 let stompClient = null;
 let username = null;
 let currentRoomId = null;
-const roomUsers = new Set();
-
-toggle.addEventListener('change', function () {
-  if (this.checked) {
-    console.log('🔛 Ligado');
-  } else {
-    console.log('🔴 Desligado');
-  }
-});
-
-var colors = [
-    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-];
-
+let roomUsers = new Set();
 
 async function setupRoom(shouldCreateNewRoom) {
 
@@ -43,12 +29,9 @@ async function setupRoom(shouldCreateNewRoom) {
         return false;
     }
 
-    const roomIdAndVisibility = {
-        roomId: currentRoomId,
-        isVisible: toggle.checked
-    };
-
     try {
+         const roomIdAndVisibility = {roomId: currentRoomId, isVisible: toggle.checked};
+
         if (shouldCreateNewRoom) {
             const createResponse = await fetch('/rooms', {
                 method: 'POST',
@@ -149,9 +132,9 @@ async function loadMessages(roomId) {
 
 
 function sendMessage(event) {
-    var messageContent = messageInput.value.trim();
+    let messageContent = messageInput.value.trim();
     if(messageContent && stompClient && currentRoomId) {
-        var chatMessage = {
+        let chatMessage = {
             sender: username,
             content: messageContent,
             messageType: 'CHAT',
@@ -172,7 +155,7 @@ function onMessageReceived(payload) {
 
          if (messageType === 'JOIN' || messageType === 'LEAVE') {
 
-            var displayText = null;
+            let displayText = null;
 
              if (messageType === 'JOIN') {
                 roomUsers.add(message.sender);
@@ -222,11 +205,16 @@ function onMessageReceived(payload) {
 }
 
 function getAvatarColor(messageSender) {
-    var hash = 0;
+
+    const colors = [
+        '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+        '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
+    ];
+    let hash = 0;
     for (var i = 0; i < messageSender.length; i++) {
         hash = 31 * hash + messageSender.charCodeAt(i);
     }
-    var index = Math.abs(hash % colors.length);
+    let index = Math.abs(hash % colors.length);
     return colors[index];
 }
 

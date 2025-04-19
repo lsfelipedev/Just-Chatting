@@ -100,6 +100,7 @@ button.accent {
     align-items: center;
     text-align: center;
     height: 100vh;
+    gap:30px;
 }
 
 .rooms-created {
@@ -109,7 +110,7 @@ button.accent {
     width: 100%;
     max-width: 300px;
     padding: 20px;
-    min-height: 250px;
+    height:380px;
 }
 
 .username-page-container {

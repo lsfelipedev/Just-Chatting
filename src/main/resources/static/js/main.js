@@ -1,24 +1,22 @@
 'use strict';
 
-var usernamePage = document.querySelector('#username-page');
-var chatPage = document.querySelector('#chat-page');
-var usernameForm = document.querySelector('#usernameForm');
-var messageForm = document.querySelector('#messageForm');
-var messageInput = document.querySelector('#message');
-var messageArea = document.querySelector('#messageArea');
-var connectingElement = document.querySelector('.connecting');
-var roomIdInput = document.querySelector('#roomId');
-var roomName = document.querySelector('#current-room-name');
-var userCountRoom = document.querySelector('#user-count');
-var closeChatButton = document.querySelector('#btn-back');
-
-var stompClient = null;
-var username = null;
-var currentRoomId = null;
-const roomUsers = new Set();
-
-
+const usernamePage = document.querySelector('#username-page');
+const chatPage = document.querySelector('#chat-page');
+const usernameForm = document.querySelector('#usernameForm');
+const messageForm = document.querySelector('#messageForm');
+const messageInput = document.querySelector('#message');
+const messageArea = document.querySelector('#messageArea');
+const connectingElement = document.querySelector('.connecting');
+const roomIdInput = document.querySelector('#roomId');
+const roomName = document.querySelector('#current-room-name');
+const userCountRoom = document.querySelector('#user-count');
+const closeChatButton = document.querySelector('#btn-back');
 const toggle = document.getElementById('toggle-btn');
+
+let stompClient = null;
+let username = null;
+let currentRoomId = null;
+const roomUsers = new Set();
 
 toggle.addEventListener('change', function () {
   if (this.checked) {
@@ -27,7 +25,6 @@ toggle.addEventListener('change', function () {
     console.log('🔴 Desligado');
   }
 });
-
 
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
@@ -48,7 +45,7 @@ async function setupRoom(shouldCreateNewRoom) {
 
     const roomIdAndVisibility = {
         roomId: currentRoomId,
-        isVisible: false
+        isVisible: toggle.checked
     };
 
     try {

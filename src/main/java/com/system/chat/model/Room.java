@@ -22,13 +22,14 @@ public class Room {
     private String roomId;
     private List<ChatMessage> messages = new ArrayList<>();
     private boolean isVisible = true;
+    private Integer usersOnline = 0;
 
 
     public Room(String roomId) {
         this.roomId = roomId;
     }
 
-    public Room(RoomDtoRequest roomDtoRequest){
+    public Room(RoomRequestDto roomDtoRequest){
         this.roomId = roomDtoRequest.roomId();
         this.isVisible = roomDtoRequest.isVisible();
     }

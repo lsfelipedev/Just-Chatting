@@ -18,6 +18,21 @@ let username = null;
 let currentRoomId = null;
 let roomUsers = new Set();
 
+document.addEventListener('DOMContentLoaded', () => {
+    const socket = new SockJS('/ws');
+    const stompClientForRooms = Stomp.over(socket);
+
+    stompClientForRooms.connect({}, () => {
+        stompClientForRooms.subscribe('/topic/rooms/rooms-selected', (payload) => {
+            const roomsData = JSON.parse(payload.body);
+            updateRoomTable(roomsData);
+        });
+        stompClientForRooms.send("/app/rooms.requestList", {});
+
+    }, (error) => {
+        console.error("Erro na conexão para atualizações:", error);
+    });
+});
 async function setupRoom(shouldCreateNewRoom) {
 
     username = document.querySelector('#name').value.trim();
@@ -216,6 +231,24 @@ function getAvatarColor(messageSender) {
     }
     let index = Math.abs(hash % colors.length);
     return colors[index];
+}
+
+function updateRoomTable(roomsData) {
+    const tableBody = document.getElementById('room-table-body');
+
+    if (!tableBody) return;
+
+    if (!roomsData || roomsData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="2">No rooms available</td></tr>';
+        return;
+    }
+
+    tableBody.innerHTML = roomsData.map(room => `
+        <tr>
+            <td>${room.roomId}</td>
+            <td>${room.userOnline}</td>
+        </tr>
+    `).join('');
 }
 
 closeChatButton.addEventListener('click', function () {

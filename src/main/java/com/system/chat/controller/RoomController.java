@@ -2,7 +2,7 @@ package com.system.chat.controller;
 
 import com.system.chat.model.ChatMessage;
 import com.system.chat.model.Room;
-import com.system.chat.model.RoomDtoRequest;
+import com.system.chat.model.RoomRequestDto;
 import com.system.chat.service.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity createRoom(@RequestBody RoomDtoRequest roomDtoRequest){
+    public ResponseEntity createRoom(@RequestBody RoomRequestDto roomDtoRequest){
 
         if(roomService.getRoomById(roomDtoRequest.roomId()) != null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Room already exists.");
@@ -57,5 +57,10 @@ public class RoomController {
         List<ChatMessage> paginatedMessages = messages.subList(start, end);
         return ResponseEntity.ok(paginatedMessages);
 
+    }
+
+    @GetMapping("/visible")
+    public ResponseEntity getRoomsVisibleAndUsersOnline(){
+        return ResponseEntity.ok(roomService.roomListVisibleAndUserOnline());
     }
 }

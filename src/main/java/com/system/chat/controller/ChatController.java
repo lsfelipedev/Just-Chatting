@@ -4,6 +4,7 @@ import com.system.chat.message.MessageDto;
 import com.system.chat.message.MessageType;
 import com.system.chat.model.ChatMessage;
 import com.system.chat.model.Room;
+import com.system.chat.model.RoomVisibleUserOnlineDto;
 import com.system.chat.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -11,13 +12,19 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
+
+import java.util.List;
 
 @Controller
 public class ChatController {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private SimpMessageSendingOperations messagingTemplate;
 
     @MessageMapping("/chat.sendMessage/{roomId}")
     @SendTo("/topic/{roomId}")
@@ -57,8 +64,15 @@ public class ChatController {
             throw new RuntimeException("room not found!");
 
         room.getMessages().add(chatMessage);
+        room.setUsersOnline(room.getUsersOnline() + 1);
         roomService.createRoom(room);
 
         return chatMessage;
+    }
+
+    @MessageMapping("/rooms.requestList")
+    @SendTo("/topic/rooms/rooms-selected")
+    public List<RoomVisibleUserOnlineDto> sendRoomList() {
+        return roomService.roomListVisibleAndUserOnline();
     }
 }

@@ -3,7 +3,7 @@ package com.system.chat;
 import com.system.chat.model.ChatMessage;
 import com.system.chat.message.MessageType;
 import com.system.chat.model.Room;
-import com.system.chat.repository.RoomRepository;
+import com.system.chat.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -18,7 +18,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 public class WebSocketEventListener {
 
     private final SimpMessageSendingOperations messagingTemplate;
-    private final RoomRepository roomRepository;
+    private final RoomService roomService;
 
     @EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
@@ -37,10 +37,14 @@ public class WebSocketEventListener {
 
             messagingTemplate.convertAndSend("/topic/" + roomId, chatMessage);
 
-            Room room = roomRepository.findByRoomId(roomId);
+            Room room = roomService.getRoomById(roomId);
+
             if (room != null) {
                 room.getMessages().add(chatMessage);
-                roomRepository.save(room);
+                if(room.getUsersOnline() > 0)
+                    room.setUsersOnline(room.getUsersOnline() - 1);
+
+                roomService.createRoom(room);
             }
         }
     }

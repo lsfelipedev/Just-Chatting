@@ -33,6 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Erro na conexão para atualizações:", error);
     });
 });
+
+
+async function connect(event) {
+    if (event) event.preventDefault();
+    await setupRoom(false);
+}
+
+async function createRoom(event) {
+    if (event) event.preventDefault();
+    await setupRoom(true);
+}
+
 async function setupRoom(shouldCreateNewRoom) {
 
     username = document.querySelector('#name').value.trim();
@@ -41,6 +53,11 @@ async function setupRoom(shouldCreateNewRoom) {
 
     if (!username) {
         alert('Please enter a username');
+        return false;
+    }
+
+    if(username.charCodeAt(0) >= 48 && username.charCodeAt(0) <= 57){
+        alert('Please start your username with a letter');
         return false;
     }
 
@@ -62,6 +79,13 @@ async function setupRoom(shouldCreateNewRoom) {
             if (!response.ok) {
                 throw new Error('Room does not exist. Please create it first.');
             }
+
+            const roomData = await response.json();
+            const usernameExists = roomData.messages.some(message => message.sender === username);
+
+            if (usernameExists) {
+                throw new Error('That username already exists in this room.');
+            }
         }
 
         usernamePage.classList.add('hidden');
@@ -71,10 +95,21 @@ async function setupRoom(shouldCreateNewRoom) {
         stompClient = Stomp.over(socket);
 
         stompClient.connect({},
-            () => onConnected(currentRoomId),
+            async () => {
+                try {
+                    await onConnected(currentRoomId);
+                    joinRoom();
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(error.message);
+                    usernamePage.classList.remove('hidden');
+                    chatPage.classList.add('hidden');
+                    connectingElement.classList.remove('hidden');
+                }
+            },
             (error) => onError(error)
         );
-        joinRoom();
+
         return true;
 
     } catch (error) {
@@ -96,15 +131,6 @@ function onError(error) {
 
 }
 
-async function connect(event) {
-    if (event) event.preventDefault();
-    await setupRoom(false);
-}
-
-async function createRoom(event) {
-    if (event) event.preventDefault();
-    await setupRoom(true);
-}
 
 function joinRoom() {
     document.getElementById("username-page").style.display = "none";

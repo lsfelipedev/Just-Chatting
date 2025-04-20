@@ -39,12 +39,15 @@ public class WebSocketEventListener {
 
             Room room = roomService.getRoomById(roomId);
 
+
             if (room != null) {
                 room.getMessages().add(chatMessage);
-                if(room.getUsersOnline() > 0)
-                    room.setUsersOnline(room.getUsersOnline() - 1);
+                room.setUsersOnline(room.getUsersOnline() - 1);
 
-                roomService.createRoom(room);
+                if(room.getUsersOnline() < 1)
+                    roomService.removeRoom(room.getId());
+                else
+                    roomService.createRoom(room);
             }
         }
     }

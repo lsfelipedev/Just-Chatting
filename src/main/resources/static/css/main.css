@@ -105,7 +105,6 @@ button.accent {
     gap:30px;
 }
 
-
 .rooms-created {
     background-color: #fff;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
@@ -123,27 +122,41 @@ button.accent {
 .title-visible-rooms{
     margin: 7px 0px;
     font-size: 25px;
+    padding: 0 10px;
 }
 
 .table-wrapper {
-    height: 83%;
+    height: 87.5%;
     width:300px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
-table {
+.table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
 }
 
-th, td {
-    text-align: center;
-    overflow-wrap: break-word;
+.table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#room-table-body {
+    display: block;
+    overflow-y: auto;
+    flex-grow: 1;
+    width: 100%;
+    max-height:250px;
 }
 
 
+.table th, .table td {
+    text-align: center;
+    padding: 8px;
+}
 .username-page-container {
     background: #fff;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);

@@ -34,11 +34,11 @@ public class RoomController {
     @GetMapping("/{roomId}")
     public ResponseEntity joinRoom( @PathVariable Map<String, String> roomId){
         String room = roomId.get("roomId");
-
-        if(roomService.getRoomById(room) == null)
+        Room roomById = roomService.getRoomById(room);
+        if(roomById == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Room not found!!");
 
-        return ResponseEntity.ok(room);
+        return ResponseEntity.ok(roomById);
     }
 
     @GetMapping("/{roomId}/messages")

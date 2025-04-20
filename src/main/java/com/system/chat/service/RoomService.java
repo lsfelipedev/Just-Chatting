@@ -21,6 +21,9 @@ public class RoomService {
     }
 
     public Room createRoom(Room room){
+
+        if(room.getRoomId().equals("public"))
+            room.setVisible(true);
         return roomRepository.save(room);
     }
 
@@ -28,5 +31,9 @@ public class RoomService {
         List<Room> allRooms = roomRepository.findAll();
         allRooms.removeIf(s -> !s.isVisible());
         return allRooms.stream().map(s -> new RoomVisibleUserOnlineDto(s.getRoomId(), s.getUsersOnline())).toList();
+    }
+
+    public void removeRoom(String id){
+        roomRepository.deleteById(id);
     }
 }

@@ -72,7 +72,7 @@ async function setupRoom(shouldCreateNewRoom) {
             });
 
             if (!createResponse.ok) {
-                throw new Error('Failed to create room');
+                throw new Error('room with this ID already exists.');
             }
         } else {
             const response = await fetch(`/rooms/${currentRoomId}`);

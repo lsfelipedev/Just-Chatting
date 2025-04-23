@@ -1,6 +1,6 @@
 # Just Chatting
-### Video Demo
-https://youtu.be/n_TO2lM3c-o
+
+### `This is my final project in CS50: Introduction to Computer Science.` 
 
 ## Description
 I developed this application with the aim of creating a **simple yet robust online chat** where users can connect and chat in real time in an intuitive way. 

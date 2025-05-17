@@ -2,6 +2,13 @@
 
 ### `This is my final project in CS50: Introduction to Computer Science.` 
 
+## Preview
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3b009410-a899-4b97-84b7-16267db65693" width="49%"/>
+  <img src="https://github.com/user-attachments/assets/ae46baa5-6a62-407c-a616-38b6fb7b23b1" width="49%"/>
+</p>
+
 ## Description
 I developed this application with the aim of creating a **simple yet robust online chat** where users can connect and chat in real time in an intuitive way. 
 
